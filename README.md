@@ -1,24 +1,27 @@
-# README
+## README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Technical Test @ Doctolib
 
-Things you may want to cover:
+The goal is to write an algorithm that checks the availabilities of an agenda depending of the events attached to it.
+The main method has a start date for input and is looking for the availabilities of the next 7 days.
 
-* Ruby version
+They are two kinds of events:
 
-* System dependencies
+ - 'opening', are the openings for a specific day and they can be reccuring week by week.
+ - 'appointment', times when the doctor is already booked.
 
-* Configuration
+To init the project:
 
-* Database creation
+``` sh
+rails new doctolib-test
+rails g model event starts_at:datetime ends_at:datetime kind:string weekly_recurring:boolean
+```
 
-* Database initialization
+The mission :
+ - in rails 5.1
+ - your code must be contained in only two files named event.rb and event_test.rb
+ - sqlite compatible
+ - to make the following unit test pass
+ - to add tests for the edge cases
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+ [Examples Gist](https://gist.github.com/VanNayer/52e800ba7bfc402986f2)
