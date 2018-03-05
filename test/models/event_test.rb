@@ -36,6 +36,24 @@ class EventTest < ActiveSupport::TestCase
     assert_equal ['9:30', '10:00', '11:30', '12:00'], availabilities[0][:slots]
   end
 
+  test 'should make future recurring openings available in the past' do
+    Event.create!(
+      kind: 'opening',
+      starts_at: DateTime.parse('Mon, 06 Aug 2018 09:30:00 +0000'),
+      ends_at: DateTime.parse('Mon, 06 Aug 2018 12:30:00 +0000'),
+      weekly_recurring: true
+    )
+    Event.create!(
+      kind: 'appointment',
+      starts_at: DateTime.parse('Mon, 04 Aug 2014 10:30:00 +0000'),
+      ends_at: DateTime.parse('Mon, 04 Aug 2014 11:30:00 +0000')
+    )
+
+    availabilities = Event.availabilities DateTime.parse('2014-08-04')
+    assert_equal Date.new(2014, 8, 4), availabilities[0][:date]
+    assert_equal ['9:30', '10:00', '11:30', '12:00'], availabilities[0][:slots]
+  end
+
   test 'should not open weekly by default' do
     Event.create!(
       kind: 'opening',
